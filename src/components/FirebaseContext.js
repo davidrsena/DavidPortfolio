@@ -35,3 +35,4 @@ export const FirebaseProvider = ({ children }) => {
 export const useFirebase = () => {
   return useContext(FirebaseContext);
 };
+
