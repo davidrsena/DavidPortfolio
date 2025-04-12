@@ -1,6 +1,6 @@
 import React, { createContext, useContext } from "react";
 import { initializeApp } from "firebase/app";
-import { getFirestore } from "firebase/firestore"; // Para o Firestore
+import { getFirestore } from "firebase/firestore"; // 
 //import { getAnalytics } from "firebase/analytics"; // 
 
 // Configuração do Firebase
