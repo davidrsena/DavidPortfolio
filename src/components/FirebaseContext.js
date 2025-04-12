@@ -1,7 +1,7 @@
 import React, { createContext, useContext } from "react";
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore"; // Para o Firestore
-import { getAnalytics } from "firebase/analytics"; // Para Analytics, opcional
+//import { getAnalytics } from "firebase/analytics"; // 
 
 // Configuração do Firebase
 const firebaseConfig = {
@@ -15,12 +15,11 @@ const firebaseConfig = {
   measurementId: "G-9BBTDH5SXF",
 };
 
-// Inicializar Firebase (fora de qualquer função ou componente)
+
 const app = initializeApp(firebaseConfig);
 const firestore = getFirestore(app);
-const analytics = getAnalytics(app); // Opcional, se não precisar pode remover
+//const analytics = getAnalytics(app); //
 
-// Contexto para acessar o Firebase
 const FirebaseContext = createContext();
 
 export const FirebaseProvider = ({ children }) => {
