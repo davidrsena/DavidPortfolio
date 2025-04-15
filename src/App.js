@@ -20,7 +20,7 @@ const App = () => {
       <FirebaseProvider>
       <Navbar page={page} setPage={setPage} />
 
-        <div className="mx-5 mt-5 row">
+        <div className="mx-5 mt-3 row">
           <AnimatePresence mode="wait">
             {page === "Personal" && <Personal key="personal" setPage={setPage} />}
             {page === "Projects" && (
