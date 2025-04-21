@@ -13,13 +13,16 @@ const Personal = ({ setPage }) => {
   const [fadeOut, setFadeOut] = useState(false);
 
   useEffect(() => {
+    // 🔧 TEMPORARY: Always show loading screen during development
+    const forceShowLoading = true; // ← change to false or remove this later
+  
     const hasVisited = sessionStorage.getItem("hasVisited");
   
-    if (hasVisited) {
+    if (!hasVisited || forceShowLoading) {
       sessionStorage.setItem("hasVisited", "true");
       const timeout = setTimeout(() => {
         setFadeOut(true);
-        setTimeout(() => setLoading(false), 800); // match fadeOut duration
+        setTimeout(() => setLoading(false), 800);
       }, 2000);
       return () => clearTimeout(timeout);
     } else {
@@ -67,16 +70,17 @@ const Personal = ({ setPage }) => {
 
         {/* Text Column */}
         <div className="col-lg-7 col-md-12">
-          <h1 className="fw-bold">Hi there. I'm David.</h1>
+          <h2 className="fw-bold">Hi there. I'm David.</h2>
           <p className="mt-2 text-justify font-weight-light">
             About four years ago, I chose to realign my career toward technology and completed a Bachelor's degree in Multimedia and Communication Technologies, specializing in web development.
-          </p>
+          <br />
           <br /> Since then, I have built a solid foundation across the entire digital product lifecycle — from gathering requirements and prototyping in Figma to implementing solutions with HTML, CSS, JavaScript, PHP, SQL, and React.
-          <br />Beyond technical expertise, my background as a musician and active member of PostLab, a cultural association, has shaped the way I work with people. I value clear communication, adaptability, and creative collaboration, and thrive in environments where different perspectives come together to build stronger solutions.
+          <br />My background as a musician and member of PostLab, a cultural association, has shaped the way I work with people: clear communication, adaptability, and creative collaboration come together to build stronger solutions.
           <br /><br /> I approach learning with the belief that if a group of people can master a task, with time and effort, I can too. This mindset drives me to continuously grow, adapt, and contribute meaningfully to any team.
           <br />
+          </p>
 
-          <h3>I am excited to join a collaborative, forward-thinking team where I can continue to develop my skills and help create impactful digital experiences.</h3>
+          <h4>I am excited to join a collaborative, forward-thinking team where I can continue to develop my skills and help create impactful digital experiences.</h4>
 
           <button
             className="personal-button text-white text-decoration-none bg-black p-4 border-0"
