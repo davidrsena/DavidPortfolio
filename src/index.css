@@ -140,6 +140,7 @@ html, body {
 .projects-container {
   height: 65vh;
   overflow-y: auto;
+  overflow-x: hidden;
   padding-bottom: 10vh;
 }
 
@@ -175,6 +176,7 @@ html, body {
 /*Hover Fall Effect*/
 .fall-item {
   width: 100%;
+  max-width: 100%;
   height: auto;
   overflow: hidden;
   position: relative;

@@ -14,7 +14,7 @@ const Personal = ({ setPage }) => {
 
   useEffect(() => {
     // 🔧 TEMPORARY: Always show loading screen during development
-    const forceShowLoading = true; // ← change to false or remove this later
+    const forceShowLoading = false; // ← change to false or remove this later
   
     const hasVisited = sessionStorage.getItem("hasVisited");
   

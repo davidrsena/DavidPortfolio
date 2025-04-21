@@ -1,18 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { useFirebase } from "./FirebaseContext";
 import { collection, getDocs } from "firebase/firestore";
-import { motion } from "framer-motion";
+import { motion} from "framer-motion";
 import "../index.css";
 
 const Projects = ({ setPage, setSelectedProject }) => {
   const [projects, setProjects] = useState([]);
   const [selectedCategories, setSelectedCategories] = useState(["all"]);
+  const [loading, setLoading] = useState(true);
   const { firestore } = useFirebase();
 
   const categories = ["all", "web", "audio", "visual"];
 
   const handleCategoryClick = (type) => {
-    // Toggle logic for multi-select
     if (type === "all") {
       setSelectedCategories(["all"]);
     } else {
@@ -20,16 +20,17 @@ const Projects = ({ setPage, setSelectedProject }) => {
       if (updated.includes(type)) {
         updated = updated.filter((cat) => cat !== type);
       } else {
-        updated = updated.filter((cat) => cat !== "all"); // Remove "all" if selecting specific ones
+        updated = updated.filter((cat) => cat !== "all");
         updated.push(type);
       }
-      if (updated.length === 0) updated = ["all"]; // Reset to "all" if empty
+      if (updated.length === 0) updated = ["all"];
       setSelectedCategories(updated);
     }
   };
 
   useEffect(() => {
     const fetchProjects = async () => {
+      setLoading(true);
       try {
         const collectionsMap = {
           web: "Projetos",
@@ -39,37 +40,28 @@ const Projects = ({ setPage, setSelectedProject }) => {
 
         let allProjects = [];
 
-        if (selectedCategories.includes("all")) {
-          const allCollections = Object.values(collectionsMap);
-          for (let collectionName of allCollections) {
-            const projectsRef = collection(firestore, collectionName);
-            const querySnapshot = await getDocs(projectsRef);
-            querySnapshot.docs.forEach((doc) =>
-              allProjects.push({
-                id: parseInt(doc.id),
-                ...doc.data(),
-                collectionName,
-              })
-            );
-          }
-        } else {
-          for (let type of selectedCategories) {
-            const collectionName = collectionsMap[type];
-            const projectsRef = collection(firestore, collectionName);
-            const querySnapshot = await getDocs(projectsRef);
-            querySnapshot.docs.forEach((doc) =>
-              allProjects.push({
-                id: parseInt(doc.id),
-                ...doc.data(),
-                collectionName,
-              })
-            );
-          }
+        const selected = selectedCategories.includes("all")
+          ? Object.keys(collectionsMap)
+          : selectedCategories;
+
+        for (let type of selected) {
+          const collectionName = collectionsMap[type];
+          const projectsRef = collection(firestore, collectionName);
+          const querySnapshot = await getDocs(projectsRef);
+          querySnapshot.docs.forEach((doc) =>
+            allProjects.push({
+              id: parseInt(doc.id),
+              ...doc.data(),
+              collectionName,
+            })
+          );
         }
 
         setProjects(allProjects);
       } catch (error) {
         console.error("Erro ao buscar projetos:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -77,20 +69,18 @@ const Projects = ({ setPage, setSelectedProject }) => {
   }, [firestore, selectedCategories]);
 
   const adjustImageUrl = (url) => {
-    if (url.includes("dropbox.com")) {
-      return url.replace("dl=0", "dl=1");
-    }
-    return url;
+    return url.includes("dropbox.com") ? url.replace("dl=0", "dl=1") : url;
   };
 
   return (
     <div>
-      <div className="d-flex justify-content-center align-items-center my-5 gap-3">
+      {/* Category Filters */}
+      <div className="d-flex justify-content-center align-items-center my-5 gap-3 flex-wrap">
         {categories.map((type) => (
           <button
             key={type}
             onClick={() => handleCategoryClick(type)}
-            className={`d-inline-flex align-items-center justify-content-center hover-overlay-css projects-button text-decoration-none border-rounded py-2 px-4 ${
+            className={`projects-button text-decoration-none border-rounded py-2 px-4 ${
               selectedCategories.includes(type) ? "active-category" : ""
             }`}
             style={{ border: "none", cursor: "pointer" }}
@@ -100,21 +90,28 @@ const Projects = ({ setPage, setSelectedProject }) => {
         ))}
       </div>
 
-      {/* Projects */}
-      <div className="projects-container container">
+  
+      {loading ? (
+        <div className="d-flex justify-content-center align-items-center" style={{ minHeight: "300px" }}>
+          <div className="spinner-border text-dark" role="status" />
+        </div>
+      ) : (
         <motion.div
-          className="container"
-          initial={{ y: "100%" }}
-          animate={{ y: 0 }}
-          exit={{ y: "-100%" }}
-          transition={{ duration: 0.6 }}
+          className="projects-container container"
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
         >
           <div className="row g-5">
             {projects.length > 0 ? (
               projects.map((project) => (
                 <div key={project.id} className="col-lg-4 col-md-6 col-12 d-flex justify-content-center">
-                  <div className="fall-item fall-effect">
-                    {project.Imgs && project.Imgs.length > 0 && (
+                  <motion.div
+                    className="fall-item fall-effect"
+                    whileHover={{ scale: 1.02 }}
+                    transition={{ type: "spring", stiffness: 200, damping: 15 }}
+                  >
+                    {project.Imgs?.[0] && (
                       <img
                         src={adjustImageUrl(project.Imgs[0])}
                         alt={project.Title || "Project Image"}
@@ -125,7 +122,7 @@ const Projects = ({ setPage, setSelectedProject }) => {
                       <h3 className="mt-2">{project.Title}</h3>
                       <p className="mt-2">{project.Synopsis}</p>
                       <button
-                        className="d-inline-flex align-items-center justify-content-center mask-button text-decoration-none py-2 px-4"
+                        className="mask-button py-2 px-4"
                         onClick={() => {
                           setSelectedProject(project);
                           setPage("ProjectDetails");
@@ -134,7 +131,7 @@ const Projects = ({ setPage, setSelectedProject }) => {
                         More info
                       </button>
                     </div>
-                  </div>
+                  </motion.div>
                 </div>
               ))
             ) : (
@@ -144,7 +141,7 @@ const Projects = ({ setPage, setSelectedProject }) => {
             )}
           </div>
         </motion.div>
-      </div>
+      )}
     </div>
   );
 };
