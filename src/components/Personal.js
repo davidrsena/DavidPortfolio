@@ -7,29 +7,28 @@ const images = [
   require("../imgs/about1.jpg"),
 ];
 
-const Personal = ({ setPage }) => {
+const Personal = ({ setPage, showWelcome, setShowWelcome }) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(showWelcome);
   const [fadeOut, setFadeOut] = useState(false);
 
   useEffect(() => {
-    // 🔧 TEMPORARY: Always show loading screen during development
-    const forceShowLoading = false; // ← change to false or remove this later
-  
-    const hasVisited = sessionStorage.getItem("hasVisited");
-  
-    if (!hasVisited || forceShowLoading) {
-      sessionStorage.setItem("hasVisited", "true");
+    if (showWelcome) {
       const timeout = setTimeout(() => {
         setFadeOut(true);
-        setTimeout(() => setLoading(false), 800);
+        setTimeout(() => {
+          setLoading(false);
+          setShowWelcome(false);
+        }, 800);
       }, 2000);
       return () => clearTimeout(timeout);
-    } else {
-      setLoading(false);
     }
-  }, []);
+  }, [showWelcome]);
 
+  // ... rest of your Personal.js stays the same
+
+
+  
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);

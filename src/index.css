@@ -32,17 +32,9 @@ html, body {
 .footer-div {
   color: #979797;
   font-size: small;
-  width: 100%;
-  text-align: center;
-  margin-top: 10px;
 }
 
 @media (min-width: 768px) {
-  .footer-div {
-    position: fixed;
-    bottom: 10px;
-  }
-
   .icon-size {
     width: 25px;
     height: 25px;
@@ -94,7 +86,7 @@ html, body {
 
 .personal-button {
   display: block;
-  margin-top: 6vh;
+  margin-top: 2vh;
   max-width: fit-content;
   transition: all 0.2s ease-in-out;
 }
@@ -216,7 +208,9 @@ html, body {
 
 /* --- FALL EFFECT --- */
 .mask-button {
-  border: 1px solid black;
+  background-color: transparent;
+  box-shadow: rgb(96, 96, 96) 0 1px 2px;
+  border: none;
   border-radius: 2px;
 }
 
