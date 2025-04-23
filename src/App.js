@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FirebaseProvider } from "./components/FirebaseContext";
 
 import Navbar from "./components/Navbar";  
@@ -14,15 +14,38 @@ import './index.css';
 const App = () => {
   const [page, setPage] = useState("Personal");
   const [selectedProject, setSelectedProject] = useState(null);
+  const [showWelcome, setShowWelcome] = useState(false);
+
+  useEffect(() => {
+    const navType = performance.getEntriesByType("navigation")[0]?.type;
+    const hasShown = sessionStorage.getItem("hasShownWelcome");
+
+    console.log("🧭 Navigation type:", navType);
+
+    if (navType === "reload" && !hasShown) {
+      console.log("✅ Showing welcome screen");
+      setShowWelcome(true);
+      sessionStorage.setItem("hasShownWelcome", "true");
+    } else {
+      console.log("⏩ Skipping welcome screen");
+    }
+  }, []);
 
   return (
     <div>
       <FirebaseProvider>
-      <Navbar page={page} setPage={setPage} />
+        <Navbar page={page} setPage={setPage} />
 
-        <div className="mx-5 mt-5 row">
+        <div className="mx-5 mt-3 row">
           <AnimatePresence mode="wait">
-            {page === "Personal" && <Personal key="personal" setPage={setPage} />}
+            {page === "Personal" && (
+              <Personal
+                key="personal"
+                setPage={setPage}
+                showWelcome={showWelcome}
+                setShowWelcome={setShowWelcome}
+              />
+            )}
             {page === "Projects" && (
               <Projects 
                 key="projects" 
