@@ -51,7 +51,7 @@ const Personal = ({ setPage, showWelcome, setShowWelcome }) => {
   }
 
   return (
-    <div className="container mt-5 gap-2" style={{ maxWidth: "1500px" }}>
+    <div className="container gap-2" style={{ maxWidth: "1500px", marginTop: "80px" }}>
       <div className="row mt-5">
         <div className="col-lg-5 col-md-12">
           <div className="image-container position-relative overflow-hidden" style={{ height: "100%", minHeight: "400px" }}>
@@ -64,7 +64,7 @@ const Personal = ({ setPage, showWelcome, setShowWelcome }) => {
                 initial={currentImageIndex === 0 ? { opacity: 0 } : { opacity: 1 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-                transition={{ duration: 0.2, ease: "easeInOut" }}
+                transition={{ duration: 0.2, ease: "easeOutIn" }}
               />
             </AnimatePresence>
           </div>

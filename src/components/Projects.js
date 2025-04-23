@@ -75,7 +75,7 @@ const Projects = ({ setPage, setSelectedProject }) => {
   return (
     <div>
       {/* Category Filters */}
-      <div className="d-flex justify-content-center align-items-center my-5 gap-3 flex-wrap">
+      <div className="d-flex justify-content-center align-items-center gap-3 flex-wrap" style={{ marginTop: "80px" }}>
         {categories.map((type) => (
           <button
             key={type}
@@ -96,7 +96,7 @@ const Projects = ({ setPage, setSelectedProject }) => {
         </div>
       ) : (
         <motion.div
-          className="projects-container container"
+          className="projects-container container mt-5"
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.6, ease: "easeOut" }}

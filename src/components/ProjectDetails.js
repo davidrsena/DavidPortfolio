@@ -76,12 +76,12 @@ const ProjectDetails = ({ setPage, selectedProject, setSelectedProject }) => {
 
   return (
     <motion.div
-      className="mt-5 position-relative"
-      initial={{ y: "100%" }}
-      animate={{ y: 0 }}
-      exit={{ y: "-100%" }}
-      transition={{ duration: 0.6 }}
-    >
+  className="mt-5 position-relative"
+  initial={{ opacity: 0, scale: 0.95 }}
+  animate={{ opacity: 1, scale: 1 }}
+  exit={{ opacity: 0, scale: 0.95 }}
+  transition={{ duration: 0.6, ease: "easeOut" }}
+>
       {/* Top back button */}
       <div className="d-flex">
         <button
