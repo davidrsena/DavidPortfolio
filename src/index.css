@@ -7,6 +7,13 @@ html, body {
   font-family: "Syne", sans-serif !important;
 }
 
+/* App-wraper ensures content is displayed vertically */
+.app-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
 /* NAVBAR component */
 .active-tab {
   text-decoration: underline red !important;
@@ -206,6 +213,38 @@ html, body {
   text-align: center;
 }
 
+@media (max-width: 768px) {
+  .fall-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .fall-item .mask {
+    position: static;
+    opacity: 1 !important;
+    background-color: transparent !important;
+    top: auto;
+    transform: none;
+    padding-top: 10px;
+    text-align: center;
+  }
+
+  .fall-effect:hover .mask {
+    top: auto;
+    opacity: 1;
+  }
+
+  .fall-effect:hover h2,
+  .fall-effect:hover p {
+    transform: none;
+  }
+
+  .fall-item p {
+    color: #333; /* visible on white bg */
+  }
+}
+
 /* --- FALL EFFECT --- */
 .mask-button {
   background-color: transparent;
@@ -235,7 +274,7 @@ html, body {
 .fall-effect:hover .mask {
   opacity: 1;
   top: 0px;
-  transition-delay: 0s; /* immediate when hover */
+  transition-delay: 0s; 
 }
 
 .fall-effect:hover h2 {

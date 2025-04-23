@@ -55,14 +55,12 @@ const ProjectDetails = ({ setPage, selectedProject, setSelectedProject }) => {
 
   if (!selectedProject || projects.length === 0) {
     return (
-      <div className="container text-center">
-        <h2>Oops... Something went wrong.</h2>
-        <button className="btn btn-dark mt-3" onClick={() => setPage("Projects")}>
-          Back to Projects
-        </button>
+      <div className="d-flex justify-content-center align-items-center" style={{ minHeight: "300px" }}>
+        <div className="spinner-border text-dark" role="status" />
       </div>
     );
   }
+  
 
   const currentIndex = projects.findIndex((proj) => proj.id === selectedProject.id);
   const prevIndex = (currentIndex - 1 + projects.length) % projects.length;

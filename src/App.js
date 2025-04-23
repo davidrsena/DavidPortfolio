@@ -23,20 +23,20 @@ const App = () => {
     console.log("🧭 Navigation type:", navType);
 
     if (navType === "reload" && !hasShown) {
-      console.log("✅ Showing welcome screen");
+      console.log("Showing welcome screen");
       setShowWelcome(true);
       sessionStorage.setItem("hasShownWelcome", "true");
     } else {
-      console.log("⏩ Skipping welcome screen");
+      console.log("Skipping welcome screen");
     }
   }, []);
 
   return (
-    <div>
+    <div className="app-wrapper d-flex flex-column min-vh-100">
       <FirebaseProvider>
         <Navbar page={page} setPage={setPage} />
 
-        <div className="mx-5 mt-3 row">
+        <div className="flex-grow-1 mx-5 mt-3 row">
           <AnimatePresence mode="wait">
             {page === "Personal" && (
               <Personal
