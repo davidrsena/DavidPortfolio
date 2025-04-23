@@ -23,7 +23,8 @@ const Personal = ({ setPage, showWelcome, setShowWelcome }) => {
       }, 2000);
       return () => clearTimeout(timeout);
     }
-  }, [showWelcome]);
+  }, [showWelcome, setShowWelcome]);
+  
 
   
   useEffect(() => {
