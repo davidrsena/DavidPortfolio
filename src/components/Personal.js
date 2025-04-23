@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import '../index.css';
+import { motion, AnimatePresence } from "framer-motion";
 
 const images = [
   require("../imgs/about3.jpeg"),
@@ -24,9 +25,7 @@ const Personal = ({ setPage, showWelcome, setShowWelcome }) => {
       return () => clearTimeout(timeout);
     }
   }, [showWelcome, setShowWelcome]);
-  
 
-  
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
@@ -50,31 +49,38 @@ const Personal = ({ setPage, showWelcome, setShowWelcome }) => {
       </div>
     );
   }
-  
 
   return (
     <div className="container mt-5 gap-2" style={{ maxWidth: "1500px" }}>
       <div className="row mt-5">
         <div className="col-lg-5 col-md-12">
-          <div className="image-container">
-            <img
-              src={images[currentImageIndex]}
-              alt={`Slide ${currentImageIndex + 1}`}
-              className="img-cover"
-            />
+          <div className="image-container position-relative overflow-hidden" style={{ height: "100%", minHeight: "400px" }}>
+            <AnimatePresence mode="wait">
+              <motion.img
+                key={currentImageIndex}
+                src={images[currentImageIndex]}
+                alt={`Slide ${currentImageIndex + 1}`}
+                className="img-cover position-absolute top-0 start-0 w-100 h-100"
+                initial={currentImageIndex === 0 ? { opacity: 0 } : { opacity: 1 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.2, ease: "easeInOut" }}
+              />
+            </AnimatePresence>
           </div>
         </div>
 
         {/* Text Column */}
-        <div className="col-lg-7 col-md-12">
+        <div className="col-lg-6 col-md-12">
           <h2 className="fw-bold">Hi there. I'm David.</h2>
           <p className="mt-2 text-justify font-weight-light">
             About four years ago, I chose to realign my career toward technology and completed a Bachelor's degree in Multimedia and Communication Technologies, specializing in web development.
-          <br />
-          <br /> Since then, I have built a solid foundation across the entire digital product lifecycle — from gathering requirements and prototyping in Figma to implementing solutions with HTML, CSS, JavaScript, PHP, SQL, and React.
-          <br />My background as a musician and member of PostLab, a cultural association, has shaped the way I work with people: clear communication, adaptability, and creative collaboration come together to build stronger solutions.
-          <br /><br /> I approach learning with the belief that if a group of people can master a task, with time and effort, I can too. This mindset drives me to continuously grow, adapt, and contribute meaningfully to any team.
-          <br />
+            <br />
+            <br /> Since then, I have built a solid foundation across the entire digital product lifecycle — from gathering requirements and prototyping in Figma to implementing solutions with HTML, CSS, JavaScript, PHP, SQL, and React.
+            <br />My background as a musician and member of PostLab, a cultural association, has shaped the way I work with people: clear communication, adaptability, and creative collaboration come together to build stronger solutions.
+            <br />
+            <br /> I approach learning with the belief that if a group of people can master a task, with time and effort, I can too. This mindset drives me to continuously grow, adapt, and contribute meaningfully to any team.
+            <br />
           </p>
 
           <h4>I am excited to join a collaborative, forward-thinking team where I can continue to develop my skills and help create impactful digital experiences.</h4>

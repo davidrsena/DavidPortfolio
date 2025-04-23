@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useFirebase } from "./FirebaseContext";
 import { collection, getDocs } from "firebase/firestore";
-import { motion} from "framer-motion";
+import { motion } from "framer-motion";
 import "../index.css";
 
 const Projects = ({ setPage, setSelectedProject }) => {
@@ -90,7 +90,6 @@ const Projects = ({ setPage, setSelectedProject }) => {
         ))}
       </div>
 
-  
       {loading ? (
         <div className="d-flex justify-content-center align-items-center" style={{ minHeight: "300px" }}>
           <div className="spinner-border text-dark" role="status" />
@@ -106,33 +105,54 @@ const Projects = ({ setPage, setSelectedProject }) => {
             {projects.length > 0 ? (
               projects.map((project) => (
                 <div key={project.id} className="col-lg-4 col-md-6 col-12 d-flex justify-content-center">
-                  <motion.div
-                    className="fall-item fall-effect"
-                    whileHover={{ scale: 1.02 }}
-                    transition={{ type: "spring", stiffness: 200, damping: 15 }}
-                  >
-                    {project.Imgs?.[0] && (
-                      <img
-                        src={adjustImageUrl(project.Imgs[0])}
-                        alt={project.Title || "Project Image"}
-                        className="img-cover"
-                      />
-                    )}
-                    <div className="mask">
-                      <h3 className="mt-2">{project.Title}</h3>
-                      <p className="mt-2">{project.Synopsis}</p>
-                      <button
-                        className="mask-button py-2 px-4"
-                        onClick={() => {
-                          setSelectedProject(project);
-                          setPage("ProjectDetails");
-                        }}
-                      >
-                        More info
-                      </button>
-                    </div>
-                  </motion.div>
-                </div>
+  <motion.div
+    className="fall-item fall-effect"
+    whileHover={{ scale: 1.02 }}
+    transition={{ type: "spring", stiffness: 200, damping: 15 }}
+  >
+    {/* Image */}
+    {project.Imgs?.[0] && (
+      <img
+        src={adjustImageUrl(project.Imgs[0])}
+        alt={project.Title || "Project Image"}
+        className="img-cover"
+      />
+    )}
+
+    {/* Desktop View (Mask, Title, Synopsis, Button) */}
+    <div className="mask d-none d-md-block">
+      <h3 className="mt-2">{project.Title}</h3>
+      <p className="mt-2">{project.Synopsis}</p>
+      <button
+        className="mask-button py-2 px-4"
+        onClick={() => {
+          setSelectedProject(project);
+          setPage("ProjectDetails");
+        }}
+      >
+        More info
+      </button>
+    </div>
+
+    {/* Mobile-only Section */}
+    <div className="container d-block d-md-none mt-1 text-center">
+      <div className=" align-items-center">
+        
+        {/* Button */}
+        <button
+          className="mx-auto border bg-white py-2 px-5 mb-2 row"
+          onClick={() => {
+            setSelectedProject(project);
+            setPage("ProjectDetails");
+          }}
+        >
+          More info {project.Title}
+        </button>
+      </div>
+    </div>
+  </motion.div>
+</div>
+
               ))
             ) : (
               <div className="col-12 text-center mt-5">
