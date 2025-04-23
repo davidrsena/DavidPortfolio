@@ -71,7 +71,7 @@ const Personal = ({ setPage, showWelcome, setShowWelcome }) => {
         </div>
 
         {/* Text Column */}
-        <div className="col-lg-6 col-md-12">
+        <div className="col-lg-7 col-md-12">
           <h2 className="fw-bold">Hi there. I'm David.</h2>
           <p className="mt-2 text-justify font-weight-light">
             About four years ago, I chose to realign my career toward technology and completed a Bachelor's degree in Multimedia and Communication Technologies, specializing in web development.
