@@ -78,7 +78,6 @@ html, body {
 /* PERSONAL component */
 
 .image-container {
-  height: 70vh;
   overflow: hidden;
   position: relative;
   border-radius: 2px;
@@ -218,39 +217,55 @@ html, body {
     display: flex;
     flex-direction: column;
     align-items: center;
-  }
-
-  .fall-item .mask {
-    position: static;
-    opacity: 1 !important;
-    background-color: transparent !important;
-    top: auto;
-    transform: none;
-    padding-top: 10px;
+    width: 100%;
     text-align: center;
   }
 
-  .fall-effect:hover .mask {
-    top: auto;
-    opacity: 1;
+  /* Image styling */
+  .fall-item img {
+    width: 100%;
+    height: auto;
+    margin-bottom: 10px; /* space between image and synopsis */
   }
 
-  .fall-effect:hover h2,
-  .fall-effect:hover p {
-    transform: none;
-  }
-
+  /* Synopsis as block under the image (No animation) */
   .fall-item p {
-    color: #333; /* visible on white bg */
+    color: #333;
+    padding: 10px 20px;
+    margin: 0 0 10px 0; /* Even margin below synopsis */
+    font-size: 14px; /* Adjusted font size for mobile */
+    text-align: center; /* Centered text */
+  }
+
+  /* Button styling - full width and no animation */
+  .mask-button {
+    padding: 12px 20px;
+    font-size: 14px;
+    width: 100%; /* Make the button take full width on mobile */
+    margin-top: 10px;
+    text-align: center;
+    border: #000000 2px solid;
+  }
+
+  /* Button shown only in mobile view (no hover effect on mobile) */
+  .mask-button.d-md-none {
+    display: block;
+    width: 100%; /* Ensure the button spans the full width */
+    margin-top: 10px;
+  }
+
+  /* Remove mask animation effect on mobile */
+  .fall-item .mask {
+    display: none !important;
   }
 }
+
 
 /* --- FALL EFFECT --- */
 .mask-button {
   background-color: transparent;
-  box-shadow: rgb(96, 96, 96) 0 1px 2px;
+  box-shadow: rgb(177, 177, 177) 0 1px 1px;
   border: none;
-  border-radius: 2px;
 }
 
 .fall-effect .mask {

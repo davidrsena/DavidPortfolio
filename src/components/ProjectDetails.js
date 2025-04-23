@@ -20,6 +20,7 @@ const techIcons = {
 const ProjectDetails = ({ setPage, selectedProject, setSelectedProject }) => {
   const { firestore } = useFirebase();
   const [projects, setProjects] = useState([]);
+  const [hasError, setHasError] = useState(false); // Error state to manage button visibility
 
   useEffect(() => {
     const fetchProjects = async () => {
@@ -47,6 +48,7 @@ const ProjectDetails = ({ setPage, selectedProject, setSelectedProject }) => {
         setProjects(allProjects);
       } catch (error) {
         console.error("Error fetching projects:", error);
+        setHasError(true); // Set error state if fetching fails
       }
     };
 
@@ -60,7 +62,6 @@ const ProjectDetails = ({ setPage, selectedProject, setSelectedProject }) => {
       </div>
     );
   }
-  
 
   const currentIndex = projects.findIndex((proj) => proj.id === selectedProject.id);
   const prevIndex = (currentIndex - 1 + projects.length) % projects.length;
@@ -110,7 +111,6 @@ const ProjectDetails = ({ setPage, selectedProject, setSelectedProject }) => {
 
       <div className="container mt-4 position-relative">
         <div className="row g-4 align-items-start"> {/* Align items from the top */}
-          
           {/* Left Arrow (only large screens) */}
           <div className="col-1 d-none d-md-flex justify-content-center">
             <button
@@ -154,28 +154,27 @@ const ProjectDetails = ({ setPage, selectedProject, setSelectedProject }) => {
 
             <h5 className="mt-3 fw-medium">Applied Technologies</h5>
             <div className="d-flex flex-wrap mt-2 gap-2">
-  {selectedProject.AppliedTech && selectedProject.AppliedTech.length > 0 ? (
-    selectedProject.AppliedTech.map((tech, index) => (
-      <motion.div
-        key={index}
-        className="d-flex align-items-center"
-      >
-        {techIcons[tech.toLowerCase()] ? (
-          <img
-            src={`icons/${techIcons[tech.toLowerCase()]}`}
-            alt={tech}
-            className="icon-size"
-          />
-        ) : (
-          <i className={`bi bi-${tech.toLowerCase()} fs-4`}></i>
-        )}
-      </motion.div>
-    ))
-  ) : (
-    <p>No technologies listed.</p>
-  )}
-</div>
-
+              {selectedProject.AppliedTech && selectedProject.AppliedTech.length > 0 ? (
+                selectedProject.AppliedTech.map((tech, index) => (
+                  <motion.div
+                    key={index}
+                    className="d-flex align-items-center"
+                  >
+                    {techIcons[tech.toLowerCase()] ? (
+                      <img
+                        src={`icons/${techIcons[tech.toLowerCase()]}`}
+                        alt={tech}
+                        className="icon-size"
+                      />
+                    ) : (
+                      <i className={`bi bi-${tech.toLowerCase()} fs-4`}></i>
+                    )}
+                  </motion.div>
+                ))
+              ) : (
+                <p>No technologies listed.</p>
+              )}
+            </div>
 
             <h5 className="mt-4 fw-medium">Synopsis</h5>
             <p className="text-justify font-weight-light">{selectedProject.SynopsisFull}</p>
@@ -194,6 +193,20 @@ const ProjectDetails = ({ setPage, selectedProject, setSelectedProject }) => {
             </button>
           </div>
         </div>
+
+        {/* Show "Back to Projects" button only if an error occurred */}
+        {hasError && (
+          <div className="text-center mt-4">
+            <button
+              className="personal-button text-white text-decoration-none bg-black p-4 border-0"
+              onClick={() => setPage("Projects")}
+            >
+              Back to Projects
+              <i className="ms-2 bi bi-chevron-right"></i>
+            </button>
+            <h1>Oops! Something went wrong.</h1>
+          </div>
+        )}
       </div>
     </motion.div>
   );
