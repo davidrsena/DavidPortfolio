@@ -25,9 +25,6 @@ const Personal = ({ setPage, showWelcome, setShowWelcome }) => {
     }
   }, [showWelcome]);
 
-  // ... rest of your Personal.js stays the same
-
-
   
   useEffect(() => {
     const interval = setInterval(() => {
